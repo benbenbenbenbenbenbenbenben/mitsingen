@@ -1,0 +1,39 @@
+<html>
+<head>
+
+{% include "sing/html-header.html" %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "sing.css" %}">
+
+</head>
+<body>
+{% include "sing/header.html" %}
+
+<h1>Please log in to continue</h1>
+
+<a class="inline" href="{% url 'register' %}">I don't have log-in details</a>
+
+<form action="/sing/" method="post" style="margin-top: 3em;">
+    {% csrf_token %}
+<div style="margin-bottom: 1em">
+    {{ form.username.errors }}
+    {{ form.username.label_tag }}<br>
+    {{ form.username }}
+<!--<a class="inline" href="">I don't remember my user name</a>-->
+</div>
+
+<div style="margin-bottom: 1em">
+    {{ form.password.errors }}
+    {{ form.password.label_tag }}<br>
+    {{ form.password }}
+<!--<a class="inline" href="">I don't remember my password</a>-->
+</div>
+
+<input type="submit" value="Log in" />
+</form>
+
+Please <a class="inline" href="mailto:mitsingen.antis@ooooooooo.net">email</a> if you have trouble logging in, including forgotten passwords and usernames.
+</body>
+</html>
+

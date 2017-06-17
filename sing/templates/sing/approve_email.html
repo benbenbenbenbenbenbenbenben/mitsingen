@@ -1,0 +1,10 @@
+{{user.first_name}} {{user.last_name}} wants to use mitsingen.
+Their email address is {{user.email}}.
+Their meetup.com name is "{{singer.meetup_name}}".
+
+Registration message:
+{{singer.registration_message}}
+
+{% for choir in choirs %}
+Approve and add to {{choir.name}}: {{url_prefix}}{% url 'approve' user.id choir.id %}
+{% endfor %}

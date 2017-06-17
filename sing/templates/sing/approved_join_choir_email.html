@@ -1,0 +1,16 @@
+Hello {{ user.first_name }}!
+
+{% if approved %}
+You've been added to the singing group {{ choir.name }}.
+
+Head here to get started: {% url 'choir' choir.id %}
+
+Have fun singing in your new group :)
+{% else %}
+Sorry, your request to join singing group {{ choir.name }} was denied.
+
+If you think this is an error, please email mitsingen.antis@ooooooooo.net or reply to this message.
+{% endif %}
+
+Cheers!
+Ben.

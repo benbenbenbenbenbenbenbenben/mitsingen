@@ -1,0 +1,20 @@
+<h2>{{ song.name }}</h2>
+
+{% if song.notes %}
+    <p>{{ song.notes }}</p>
+{% endif %}
+
+{% if default_part %}
+<a style="margin-right: 10px;" href="{% url 'song' choir.id song.id default_part.id %}">Last practised part - {{ default_part.name }}</a>
+{% endif %}
+
+{% for part in parts %}
+{% if default_part %}
+    {% if default_part != part %}
+        <a class="lowlight" href="{% url 'song' choir.id song.id part.id %}">{{ part.name }}</a>
+    {% endif %}
+{% else %}
+    <a href="{% url 'song' choir.id song.id part.id %}">{{ part.name }}</a>
+{% endif %}
+{% endfor %}
+

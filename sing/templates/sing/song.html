@@ -1,0 +1,227 @@
+<html>
+<head>
+
+{% include "sing/html-header.html" %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "sing.css" %}">
+
+</head>
+<body>
+{% include "sing/header.html" %}
+
+<div id="song-title">
+<h1>{{ song.name }}: {{ part.name }}</h1>
+
+<div id="song-switch-part">
+Switch to
+{% for other_part in other_parts %}
+    <a href="{% url 'song' choir.id song.id other_part.id %}">{{ other_part.name }}</a>
+    {% if not forloop.last %} / {% endif %}
+{% endfor %}
+</div>
+</div>
+
+<p>{{ song.notes }}</p>
+
+{% if show_help %}
+<div class="tip right">
+The grey area selects where you want to learn, record or review.<br>
+Click on sections to select them.<br>
+To select multiple sections, press shift when clicking.<br>
+You can also drag on the start and end of the selection.<br>
+</div>
+{% endif %}
+
+<div width="100%">
+<canvas id="song" width="100%" height={% if part.midi_file %}200{%else%}100{%endif%}/>
+</div>
+
+<a class="inline" href="{{ part.recording_file.url }}">Download this part</a>
+
+{% if is_staff %}
+<hr>
+
+<form action="{% url 'song' choir.id song.id part.id %}" method="post">
+    {% csrf_token %}
+    {{ createSectionForm }}
+    <input type="submit" value="Create new section" />
+</form>
+
+<hr>
+
+<form action="{% url 'song' choir.id song.id part.id %}" method="post">
+    {% csrf_token %}
+    {{ createTimeSignatureForm }}
+    <input type="submit" value="Create new time signature" />
+</form>
+
+<hr>
+
+{% endif %}
+
+<div id = "transport-and-lyrics">
+
+<div id = "transport">
+
+<div class = "transport stop" id="stopTransport" style="display: none;">
+    <div class='action stop' onclick='stop()'>Stop</div>
+</div>
+
+<div class = "transport listen" id="listenTransport">
+    <div class='action listen' onclick='play()'>1 Learn</div>
+    {% if show_help %}
+    <div class="tip">
+    Listen and learn in your own time
+    </div>
+    {% endif %}
+</div>
+
+<div class = "transport record" id="recordTransport">
+    <div class='action record' onclick='record()'>2 Record</div>
+    {% if show_help %}
+    <div class="tip">
+    Record yourself singing while listening to this part, all parts, or a metronome
+    </div>
+    {% endif %}
+    <div>While recording, hear:</div>
+    <div id='record-hearPart' class='option record hearPart off' onclick='toggle("record", "hearPart")'> {{ part.name }}</div>
+    <div id='record-hearAll' class='option record hearAll off' onclick='toggle("record", "hearAll")'> All</div>
+    {% if not isFreeform %}
+    <div id='record-hearMetronome' class='option record hearMetronome off' onclick='toggle("record", "hearMetronome")'> Metronome</div>
+    {% endif %}
+    <!--
+    {% for other_part in other_parts %}
+        <div id='record-hearOther{{ forloop.counter0 }}' class='option record hearOther off' onclick='toggle("record", "hearOther{{ forloop.counter0 }}")'>Hear {{ other_part.name }}</div>
+    {% endfor %}
+    -->
+</div>
+
+<div class = "transport review" id="reviewTransport">
+    <div class='action review' onclick='review()'>3 Review</div>
+    {% if show_help %}
+    <div class="tip">
+    Listen to the recording of yourself on its own, with this part, or with all parts
+    </div>
+    {% endif %}
+    <div>While reviewing, hear:</div>
+    <div id='review-hearPart' class='option review hearPart off' onclick='toggle("review", "hearPart")'> {{ part.name }}</div>
+    <div id='review-hearAll' class='option review hearAll off' onclick='toggle("review", "hearAll")'> All</div>
+    {% if show_help %}
+    <div class="tip">
+    Timing problems with Reviewing? Click on your name top-right and adjust the Latency.
+    </div>
+    {% endif %}
+    <!--
+    {% for other_part in other_parts %}
+        <div id='review-hearOther{{ forloop.counter0 }}' class='option review hearOther off' onclick='toggle("review", "hearOther{{ forloop.counter0 }}")'>Hear {{ other_part.name }}</div>
+    {% endfor %}
+    -->
+</div>
+
+</div>
+
+<!--
+<div class = "recordings" id="recordings">
+    <div class='action keep' onclick='keep(1)'>Keep</div>
+    <div class='action recall' onclick='recall(1)'>Recall</div>
+    < !--<div class='action share' onclick='share(1)'>Share</div>-- >
+    < !--
+    {% for recording in recordings %}
+        <div class='action keep' onclick='keep()'>{{ recording.created|timesince }}</div>
+    {% endfor %}
+    -- >
+</div>
+-->
+
+<div id = "lyrics">
+<h2>Words</h2>
+<p id="lyrics-content">
+</p>
+{% if "Fuge" in song.name %}
+    {% if "Soprano" in part.name %}
+        <iframe id="scrollingWords" src='{% static "mitsingen.soprano.html" %}' width=900 height=400> </iframe>
+    {% endif %}
+    {% if "Alto" in part.name %}
+        <iframe id="scrollingWords" src='{% static "mitsingen.alto.html" %}' width=900 height=400> </iframe>
+    {% endif %}
+    {% if "Tenor" in part.name %}
+        <iframe id="scrollingWords" src='{% static "mitsingen.tenor.html" %}' width=900 height=400> </iframe>
+    {% endif %}
+    {% if "Bass" in part.name %}
+        <iframe id="scrollingWords" src='{% static "mitsingen.bass.html" %}' width=900 height=400> </iframe>
+    {% endif %}
+{% endif %}
+</div>
+
+</div>
+
+<script>
+var module = undefined;
+</script>
+
+<script src='{% static "MIDIFile.js" %}'></script>
+<script src='{% static "song.js" %}'></script>
+
+<script>
+drawLoadingCanvas();
+
+configure(
+    [ "{% if part_performance.recording1 %}{{ part_performance.recording1.recording_file.url }}{% endif %}",
+    "{% if part_performance.recording2 %}{{ part_performance.recording2.recording_file.url }}{% endif %}",
+    "{% if part_performance.recording3 %}{{ part_performance.recording3.recording_file.url }}{% endif %}",
+    ],
+    [ "{% url 'keep' part.id 1 %}",
+    "{% url 'keep' part.id 2 %}",
+    "{% url 'keep' part.id 3 %}" ] ,
+    [ "{% if part_performance.recording1 %}{% url 'share' part_performance.recording1.id choir.id %}{% endif %}",
+    "{% if part_performance.recording2 %}{% url 'share' part_performance.recording2.id choir.id %}{% endif %}",
+    "{% if part_performance.recording3 %}{% url 'share' part_performance.recording3.id choir.id %}{% endif %}" ] ,
+    "{{ csrf_token }}")
+
+configureSong(
+    "{{ song.recording_file.url }}",
+    "{{ part.recording_file.url }}",
+    [
+    {% for other_part in other_parts %}
+        "{{ other_part.recording_file.url }}",
+    {% endfor %}
+    ],
+    "{% static 'metronome_tock.mp3' %}",
+    ["{% static '1.mp3' %}", "{% static '2.mp3' %}", "{% static '3.mp3' %}", "{% static '4.mp3' %}"],
+    {{ song.tempo }},
+    {{ singer.latency }},
+    {% if isFreeform %}true{% else %}false{% endif %},
+    {% if part.midi_file %}"{{ part.midi_file.url }}"{% else %}undefined{% endif %}
+)
+
+console.log("Latency: {{ singer.latency }}");
+{% for section in sections %}
+addSection("{{ section.name }}", {{ section.start }}, {{ section.end }}, `{{ section.lyrics }}`);
+{% endfor %}
+{% for time_signature in time_signatures %}
+addTimeSignature({{ time_signature.start_beat_in_song }}, {{ time_signature.start_beat_in_bar }}, {{ time_signature.beats_per_bar }});
+{% endfor %}
+
+setIsStaff({% if is_staff %} true {% else %} false {% endif %});
+
+updateStyles();
+
+{% if "Fuge" in song.name %}
+setTimeout(function ()
+{
+    scrollingWordsFrame = document.getElementById('scrollingWords').contentWindow
+    scrollingWordsFrame.followWebAudioContext(audioContext);
+    scrollingWordsFrame.setBeatTime(60000/{{ song.tempo }})
+    setPlayBufferCallback(scrollingWordsFrame.startFromBeat);
+    setStopBufferCallback(scrollingWordsFrame.stop);
+    setStartTimeCallback(scrollingWordsFrame.setStartBeat)
+    console.log("Connection to scrolling words configured")
+}, 1000);
+{% endif %}
+
+</script>
+
+</body>
+</html>
+

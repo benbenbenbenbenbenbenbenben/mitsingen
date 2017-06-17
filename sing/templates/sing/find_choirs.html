@@ -1,0 +1,26 @@
+<html>
+<head>
+
+{% include "sing/html-header.html" %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "sing.css" %}">
+
+</head>
+<body>
+{% include "sing/header.html" %}
+
+<p>Below are the current choirs or choir seasons that you're not yet involved in.</p>
+<p>Click on <b>Join</b> to send a request to join.</p>
+<p>Note that some of these have been set up for specific reasons with invited singers from meetup.com - there's a description of what the group's about below each - so please don't be sad if your request is refused.</p>
+
+{% for choir in choirs %}
+{% if not choir.is_old %}
+<h3>{{ choir.name }}</h3>
+<p>{{ choir.description }}</p>
+<a href="{% url 'join_choir' choir.id %}">Join <i>{{ choir.name }}</i></a>
+{% endif %}
+{% endfor %}
+
+</body>
+</html>

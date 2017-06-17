@@ -1,0 +1,67 @@
+<html>
+<head>
+
+{% include "sing/html-header.html" %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "sing.css" %}">
+
+</head>
+<body>
+{% include "sing/header.html" %}
+
+<h1>Register to use mitsingen</h1>
+
+<p>
+The information you give will be used to check that you're allowed to access mitsingen, so please give a real name and email address, and your meetup.com name if you have arrived here from there. The check is currently manual, so there will be a delay before you can access - sorry about that! You'll get an email when your registration is approved.
+</p>
+
+<form action="/sing/register" method="post" style="margin-top: 3em;">
+    {% csrf_token %}
+<div style="margin-bottom: 1em">
+    {{ form.username.errors }}
+    {{ form.username.label_tag }}<br>
+    {{ form.username }}
+</div>
+
+<div style="margin-bottom: 1em">
+    {{ form.password.errors }}
+    {{ form.password.label_tag }}<br>
+    {{ form.password }}
+</div>
+
+<div style="margin-bottom: 1em">
+    {{ form.first_name.errors }}
+    {{ form.first_name.label_tag }}<br>
+    {{ form.first_name }}
+</div>
+
+<div style="margin-bottom: 1em">
+    {{ form.last_name.errors }}
+    {{ form.last_name.label_tag }}<br>
+    {{ form.last_name }}
+</div>
+
+<div style="margin-bottom: 1em">
+    {{ form.meetup_name.errors }}
+    {{ form.meetup_name.label_tag }}<br>
+    {{ form.meetup_name }}
+    This is the name you use on meetup.com. It is important so I can check if you've paid and respond to queries and questions properly.
+</div>
+
+<div style="margin-bottom: 1em">
+    {{ form.email.errors }}
+    {{ form.email.label_tag }}<br>
+    {{ form.email }}
+</div>
+
+<div style="margin-bottom: 1em">
+    {{ form.message.errors }}
+    {{ form.message.label_tag }}<br>
+    {{ form.message }}
+</div>
+
+<input type="submit" value="Register" />
+</form>
+</body>
+</html>

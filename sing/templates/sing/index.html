@@ -1,0 +1,37 @@
+<html>
+<head>
+
+{% include "sing/html-header.html" %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "sing.css" %}">
+
+</head>
+<body>
+{% include "sing/header.html" %}
+
+<p>Hello, {{ first_name }}! Please pick a choir or choir season you want to practise.</p>
+
+{% for choir in choirs %}
+{% if not choir.is_old %}
+<a href="{% url 'choir' choir.id %}">{{ choir.name }}</a>
+{% endif %}
+{% endfor %}
+
+<p>
+<a class="inline" href="{% url 'find_choirs' %}">Find more choirs</a>
+</p>
+
+<h2>Previous choirs</h2>
+<p>You'll find old one-off choirs or seasons that have finished below, so you can relive the joy. Sometimes songs may be removed from them for copyright reasons, sorry about that!</p>
+
+{% for choir in choirs %}
+{% if choir.is_old %}
+<a href="{% url 'choir' choir.id %}">{{ choir.name }}</a>
+{% endif %}
+{% endfor %}
+
+
+</body>
+</html>
+

@@ -1,0 +1,21 @@
+<html>
+<head>
+
+{% include "sing/html-header.html" %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "sing.css" %}">
+
+</head>
+<body>
+{% include "sing/header.html" %}
+
+<h1>Request submitted</h1>
+
+<p>
+Thank you for asking to join {{ choir.name }}! Look out for an email once this has been reviewed.
+</p>
+
+</body>
+</html>
+

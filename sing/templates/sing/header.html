@@ -1,0 +1,17 @@
+<div id="header">
+<a id="home" href="{% url 'index' %}">
+Mitsingen
+</a>
+
+{% if first_name %}
+<div id="user">
+You are singing as <a class="inline" href="{% url 'singer' %}">{{ first_name }}</a>
+{% if choir %}
+in <a class="inline" href="{% url 'choir' choir.id %}">{{ choir.name }}</a>
+{% endif %}
+<a class="button" href="{% url 'logout' %}">Logout</a>
+</div>
+{% endif %}
+
+</div>
+

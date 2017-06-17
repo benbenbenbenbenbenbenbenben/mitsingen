@@ -1,0 +1,39 @@
+<html>
+<head>
+
+{% include "sing/html-header.html" %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static "sing.css" %}">
+
+</head>
+<body>
+{% include "sing/header.html" %}
+
+<h1>Your settings</h1>
+
+
+
+<form action="{% url 'singer' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+    {% if settings_updated %}
+    Settings successfully updated
+    {% endif %}
+</form>
+
+<h2>About latency</h2>
+<p>
+Latency is a magic number that adjusts for slight delays in how your computer deals with sound. It changes how your recorded voice is lined up with the pre-recorded parts when you "Review".
+</p>
+<p>
+If you feel like your voice is always coming <b>after</b> the pre-recorded part (and it isn't because you're actually singing late!) try increasing this number. Increase in small steps, and it is unlikely to ever be more than 0.5.
+</p>
+<p>
+If you feel like your voice is always coming <b>before</b> the pre-recorded part (and it isn't because you're actually singing early!) try decreasing this number.
+</p>
+
+</body>
+</html>
+

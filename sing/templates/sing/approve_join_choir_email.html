@@ -1,0 +1,6 @@
+{{user.first_name}} {{user.last_name}} ({{user.username}}) wants to join {{ choir.name }}.
+Their email address is {{user.email}}.
+Their meetup.com name is "{{singer.meetup_name}}".
+
+Approve: {{url_prefix}}{% url 'approve_join_choir' user.id choir.id 1 %}
+Deny: {{url_prefix}}{% url 'approve_join_choir' user.id choir.id 0 %}

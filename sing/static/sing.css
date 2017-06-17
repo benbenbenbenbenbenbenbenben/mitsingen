@@ -1,0 +1,268 @@
+a#home
+{
+    font-family: "Londrina Solid", cursive;
+}
+
+h1 {
+    font-family: "Work Sans", serif;
+    font-weight: 300;
+}
+
+h2 {
+    margin-top: 1em;
+    padding-top: 0.5em;
+    border-top: 1px #cccccc solid;
+    font-family: "Work Sans", serif;
+    font-weight: 300;
+}
+
+h3 {
+    margin-top: 1em;
+    padding-top: 0.5em;
+    font-family: "Work Sans", serif;
+    font-weight: 300;
+    font-size: x-large;
+    margin-bottom: 0em;
+}
+
+p {
+    font-family: "Work Sans", serif;
+    font-weight: 400;
+}
+
+a {
+    text-decoration: none;
+
+    color: white;
+    padding-top: 0.4em;
+    padding-bottom: 0.5em;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    cursor: pointer;
+    border-radius: 0.3em;
+    background-color: #7788ff
+}
+
+a.lowlight {
+    background-color: #99aaff
+}
+
+a.inline {
+    text-decoration: underline;
+
+    color: black;
+    padding: 0em;
+    background-color: transparent;
+}
+
+a#home {
+    color: #7788ff;
+    padding: 0em;
+    background-color: transparent;
+    font-size: 70px;
+}
+
+div#header
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 11px #cccccc solid;
+    padding-bottom: 10px;
+}
+
+div#song-title
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: baseline;
+}
+
+div#song-title a
+{
+    background: transparent;
+    padding: 0;
+    color: black;
+}
+
+div#song-switch-part
+{
+    padding-left: 40px;
+    font-family: "Work Sans", serif;
+    font-weight: 400;
+}
+
+div#header div#user
+{
+    font-family: "Work Sans", serif;
+    font-weight: 400;
+}
+
+div#transport {
+    padding-top: 1em;
+    display: flex;
+    flex-direction: row;
+}
+
+div#transport-and-lyrics {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div.transport {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    padding-right: 20px;
+}
+
+div.recordings {
+    padding-top: 1em;
+    display: flex;
+    flex-direction: row;
+}
+
+div.action {
+    color: white;
+    padding-top: 0.4em;
+    padding-bottom: 0.5em;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    margin: 0.2em;
+    cursor: pointer;
+    border-radius: 0.3em;
+    font-size: 20px;
+    width: 100px;
+}
+
+div.option {
+    box-sizing: border-box;
+    color: white;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+    margin: 0.2em;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: "Work Sans", serif;
+    font-weight: 300;
+}
+
+div.option.record {
+    color: #ee4444;
+}
+
+div.option.listen {
+    color: #44ee44;
+}
+
+div.option.review {
+    color: #7788ff;
+}
+
+div.option.off {
+    opacity: 0.7;
+}
+
+div.option.on {
+    opacity: 1.0;
+}
+
+div.option.off::before {
+    content: "\2610";
+}
+
+div.option.on::before {
+    content: "\2611";
+}
+
+div.action.stop {
+    background-color: #ffff55;
+    text-shadow: 0.0em 0.0em 0.3em red;
+}
+
+div.action.listen {
+    background-color: #88ee88;
+    text-shadow: 0.0em 0.0em 0.3em green;
+}
+
+div.action.record {
+    background-color: #ee8888;
+    text-shadow: 0.0em 0.0em 0.3em red;
+}
+
+div.action.review {
+    background-color: #8888ee;
+    text-shadow: 0.0em 0.0em 0.3em red;
+}
+
+div.action.keep {
+    background-color: #bbbbbb;
+    text-shadow: 0.0em 0.0em 0.3em gray;
+}
+
+div.action.recall {
+    background-color: #bbbbbb;
+    text-shadow: 0.0em 0.0em 0.3em gray;
+}
+
+div.action.share {
+    background-color: #bbbbbb;
+    text-shadow: 0.0em 0.0em 0.3em gray;
+}
+
+body {
+    font-family: "Work Sans", sans-serif;
+}
+
+a.button {
+    font-family: "Londrina Solid", cursive;
+}
+
+input[type=submit] {
+    padding: 5px 15px;
+    background: #7788ff;
+    color: white;
+    font-size: large;
+    border: 0 none;
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-family: "Work Sans", sans-serif;
+}
+
+input[type=text], input[type=email] {
+    font-size: large;
+    font-family: "Work Sans", sans-serif;
+}
+
+input[type=number] {
+    font-size: large;
+    font-family: "Work Sans", sans-serif;
+}
+
+input[type=password] {
+    font-size: large;
+    font-family: "Work Sans", sans-serif;
+}
+
+textarea {
+    font-family: "Work Sans", sans-serif;
+}
+
+div.tip {
+    font-size: smaller;
+    margin-bottom: 0.5em;
+    color: gray;
+}
+
+div.tip.right {
+    font-size: smaller;
+    text-align: right;
+    margin-bottom: 0.5em;
+}
+
