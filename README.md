@@ -1,3 +1,5 @@
+Install the latest Python 2 (my server is Python 2) and Django 1.9.1 (maybe later versions work too?)
+
 Set the following environment variables:
 
 - DJANGO_SECRET_KEY - some random string that Django uses for encryption
