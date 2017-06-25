@@ -37,7 +37,7 @@ You can also drag on the start and end of the selection.<br>
 <canvas id="song" width="100%" height={% if part.midi_file %}200{%else%}100{%endif%}/>
 </div>
 
-<a class="inline" href="{{ part.recording_file.url }}">Download this part</a>
+<a class="inline" href="{{ part.recording_file.url }}" download="{{ part.recording_file.url }}">Download this part</a>
 
 {% if is_staff %}
 <hr>
